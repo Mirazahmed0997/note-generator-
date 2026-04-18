@@ -1,6 +1,8 @@
 from google import genai
 from dotenv import load_dotenv
-import os
+import os,io
+import streamlit as st
+from gtts import gTTS
 
 
 load_dotenv()
@@ -19,3 +21,12 @@ def note_generator(images):
    )
     return response.text
     
+    
+def audio_tracription(text):
+    speech=gTTS(text,lang="en",slow=False)
+
+    audio_buffer=io.BytesIO()
+    speech.write_to_fp(audio_buffer)
+    st.audio(audio_buffer)   
+    
+    return audio_buffer 

@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 import streamlit as st
 from api_calling import note_generator
+from api_calling import audio_tracription
 from PIL import Image
 
 
@@ -65,7 +66,8 @@ if submit_button:
         # audio
         with st.container(border=True):
             st.subheader("Audio")
-            st.text("Note will be shown here")
+            with st.spinner("Transforming to audio"):
+                audio=audio_tracription(notes)
             
         # quiz
         with st.container(border=True):
