@@ -22,13 +22,13 @@ images = st.file_uploader(
 if images: 
      for img in images:
         converted_image = Image.open(img)
-     prompt=""" summarize the picture in note format at max 100 words, 
-     make sure to add neccessary markdown to differntiate different"""
-     
-     response=client.models.generate_content(
-     model="gemini-3-flash-preview",
-     contents=[converted_image,prompt],
-     )
-     
-     st.text(response.text)
+        prompt=""" summarize the picture in note format at max 100 words, 
+        make sure to add neccessary markdown to differntiate different"""
+        
+        response=client.models.generate_content(
+        model="gemini-3-flash-preview",
+        contents=[converted_image,prompt],
+        )
+        
+        st.markdown(response.text)
      

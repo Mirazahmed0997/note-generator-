@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 import streamlit as st
 from api_calling import note_generator
-from PLI import Image
+from PIL import Image
 
 
 load_dotenv()
@@ -18,7 +18,17 @@ with st.sidebar:
             "Upload a image",
             type=["jpg","jpeg","png"],
             accept_multiple_files=True
-            )   
+            ) 
+        
+        
+        
+        converted_images=[]  
+        for img in images:
+            converted_image=Image.open(img)
+            converted_images.append(converted_image)
+            
+            
+            
         if images:
             if len(images)>3:
                 st.error("You are uploading more three image")
@@ -48,9 +58,9 @@ if submit_button:
         
         # notes
         with st.container(border=True):
-            st.subheader("Your note")
-            notes=note_generator(images)
-            st.text(notes)
+            with st.spinner("Miraz is writting about your image"):
+                 notes=note_generator(converted_images)
+                 st.markdown(notes)
             
         # audio
         with st.container(border=True):
