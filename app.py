@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 import streamlit as st
 from api_calling import note_generator
 from api_calling import audio_tracription
+from api_calling import quiz_generator
+from api_calling import text_generator
 from PIL import Image
 
 
@@ -13,8 +15,18 @@ st.title("Note summary & Quiz generator")
 st.markdown("Upload upto 3 images to genarate note summary and quizess")
 st.divider()
 
+
+with st.container(border=True):
+        text=st.text_input("Ask anything to Miraz")
+        if text:
+            ans=text_generator(text)
+            st.markdown(ans)
+
+
+
 with st.sidebar:
         st.header("Controls")
+        
         images = st.file_uploader(
             "Upload a image",
             type=["jpg","jpeg","png"],
@@ -67,13 +79,22 @@ if submit_button:
         with st.container(border=True):
             st.subheader("Audio")
             with st.spinner("Transforming to audio"):
+                notes=notes.replace("#","")
+                notes=notes.replace("*","")
+                notes=notes.replace("-","")
+                notes=notes.replace("''","")
+                notes=notes.replace("`","")
+                
+                
                 audio=audio_tracription(notes)
             
         # quiz
         with st.container(border=True):
             # st.subheader(f "Quiz ({selected_option})")
             st.subheader(f"Quiz ({selected_option})")
-            st.text("Note will be shown here")
+            with st.spinner("Generating quiz"):
+                quizzes = quiz_generator(converted_images,selected_option)
+                st.markdown(quizzes)
             
             
             
