@@ -2,6 +2,9 @@ from google import genai
 import os
 from dotenv import load_dotenv
 import streamlit as st
+from api_calling import note_generator
+from PLI import Image
+
 
 load_dotenv()
 
@@ -46,7 +49,8 @@ if submit_button:
         # notes
         with st.container(border=True):
             st.subheader("Your note")
-            st.text("Note will be shown here")
+            notes=note_generator(images)
+            st.text(notes)
             
         # audio
         with st.container(border=True):
