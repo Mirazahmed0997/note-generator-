@@ -1,4 +1,4 @@
-import google.genai as genai
+import google as genai
 from dotenv import load_dotenv
 import os,io
 import streamlit as st
